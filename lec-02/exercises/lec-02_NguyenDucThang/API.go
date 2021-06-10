@@ -78,11 +78,15 @@ func div(w http.ResponseWriter, r *http.Request) {
 	var b = 0
 	a, _ = strconv.Atoi(x)
 	b, _ = strconv.Atoi(y)
-	math := &Input{OP: a / b, X: a, Y: b}
-	re, err := json.Marshal(math)
-	if err != nil {
-		fmt.Println(err)
-		return
+	if b != 0 {
+		math := &Input{OP: a / b, X: a, Y: b}
+		re, err := json.Marshal(math)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		fmt.Fprintf(w, "%v", string(re))
+	} else {
+		fmt.Println("Error")
 	}
-	fmt.Fprintf(w, "%v", string(re))
 }
